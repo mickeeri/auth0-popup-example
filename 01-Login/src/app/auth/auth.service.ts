@@ -7,18 +7,30 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
-
   auth0 = new auth0.WebAuth({
     clientID: AUTH_CONFIG.clientID,
     domain: AUTH_CONFIG.domain,
     responseType: 'token id_token',
-    redirectUri: AUTH_CONFIG.callbackURL
+    redirectUri: AUTH_CONFIG.callbackURL,
   });
 
   constructor(public router: Router) {}
 
   public login(): void {
     this.auth0.authorize();
+  }
+
+  public loginWithPopup(): void {
+    this.auth0.popup.authorize(
+      {
+        // Any additional options can go here
+      },
+      function(err, authResult) {
+        if (err) {
+          console.error(err);
+        }
+      },
+    );
   }
 
   public handleAuthentication(): void {
@@ -36,7 +48,9 @@ export class AuthService {
 
   private setSession(authResult): void {
     // Set the time that the access token will expire at
-    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    const expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime(),
+    );
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
@@ -57,5 +71,4 @@ export class AuthService {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
   }
-
 }
