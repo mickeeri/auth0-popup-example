@@ -10,7 +10,6 @@ export class CallbackComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    console.log('callback');
     this.auth.auth0.popup.callback();
   }
 }

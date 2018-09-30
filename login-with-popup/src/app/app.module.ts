@@ -13,18 +13,14 @@ import { AuthService } from './auth/auth.service';
 import { CallbackComponent } from './callback/callback.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CallbackComponent
-  ],
+  declarations: [AppComponent, HomeComponent, CallbackComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
   ],
   providers: [AuthService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
