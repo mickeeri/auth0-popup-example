@@ -11,7 +11,7 @@ export class AuthService {
     clientID: AUTH_CONFIG.clientID,
     domain: AUTH_CONFIG.domain,
     responseType: 'token id_token',
-    redirectUri: AUTH_CONFIG.callbackURL,
+    redirectUri: 'http://localhost:4200/callback',
   });
 
   constructor(public router: Router) {}
